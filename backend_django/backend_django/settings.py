@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'employees.apps.EmployeesConfig',
+    'areas.apps.AreasConfig',
+    'types_of_identity_documents.apps.TypesOfIdentityDocumentsConfig',
 ]
 
 MIDDLEWARE = [
