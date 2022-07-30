@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'employees.apps.EmployeesConfig',
     'areas.apps.AreasConfig',
     'types_of_identity_documents.apps.TypesOfIdentityDocumentsConfig',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
