@@ -1,5 +1,6 @@
 from django.db import models
 
+# how to create seeders in django: https://stackoverflow.com/a/51577650
 # Generate custom field for primary key
 # https://docs.djangoproject.com/en/4.0/howto/custom-model-fields/#custom-database-types
 # https://stackoverflow.com/a/56306262/9655579
