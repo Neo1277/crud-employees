@@ -19,4 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('countries.urls')),
+    path('', include('areas.urls')),
+    path('', include('types_of_identity_documents.urls')),
 ]

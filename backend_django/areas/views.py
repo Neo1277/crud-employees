@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import Areas
+
+from .serializers import AreasSerializer
+
+class RetrieveAreasView(generics.ListAPIView):
+    queryset = Areas.objects.all()
+    serializer_class = AreasSerializer

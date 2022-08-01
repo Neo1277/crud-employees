@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import generics
 
-# Create your views here.
+from .models import TypesOfIdentityDocuments
+
+from .serializers import TypesOfIdentityDocumentsSerializer
+
+class RetrieveTypesOfIdentityDocumentsView(generics.ListAPIView):
+    queryset = TypesOfIdentityDocuments.objects.all()
+    serializer_class = TypesOfIdentityDocumentsSerializer
