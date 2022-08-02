@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('countries.urls')),
     path('', include('areas.urls')),
     path('', include('types_of_identity_documents.urls')),
+    path('', include('employees.urls')),
 ]

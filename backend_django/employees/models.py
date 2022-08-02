@@ -5,6 +5,8 @@ from types_of_identity_documents.models import TypesOfIdentityDocuments
 from django_countries.fields import CountryField
 from areas.models import Areas
 
+from django.db.models import F
+
 class ThirdParties(models.Model):
 
     id = UnsignedAutoField(
@@ -39,6 +41,41 @@ class ThirdParties(models.Model):
         auto_now=True,
         help_text="Date and time when the register was updated"
     )
+
+class EmployeesManager(models.Manager):
+    def get_all(self):
+        return self.values(
+            'third_party__identity_document',
+            'third_party__id',
+            'third_party__last_name',
+            'third_party__second_surname',
+            'third_party__first_name',
+            'third_party__middle_names',
+            'third_party__email',
+            'third_party__types_of_identity_documents__description',
+            'third_party__types_of_identity_documents__id',
+            'country',
+            'area__id',
+            'area__description',
+            'id',
+            'status',
+            'date_of_entry',
+            'created_at',
+            'updated_at',
+        ).annotate(
+            identity_document=F('third_party__identity_document'),
+            third_party_id=F('third_party__id'),
+            last_name=F('third_party__last_name'),
+            second_surname=F('third_party__second_surname'),
+            first_name=F('third_party__first_name'),
+            middle_names=F('third_party__middle_names'),
+            email=F('third_party__email'),
+            type_of_identity_document=F('third_party__types_of_identity_documents__description'),
+            type_of_identity_document_id=F('third_party__types_of_identity_documents__id'),
+            area_id=F('area__id'),
+            area_description=F('area__description'),
+            employee_id=F('id'),
+        )
 
 class Employees(models.Model):
 
@@ -85,3 +122,5 @@ class Employees(models.Model):
         auto_now=True,
         help_text="Date and time when the register was updated"
     )
+
+    objects = EmployeesManager()
