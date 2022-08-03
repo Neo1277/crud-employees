@@ -2,7 +2,7 @@ from rest_framework import generics, pagination
 
 from .models import Employees
 
-from .serializers import EmployeesSerializer
+from .serializers import RetrieveEmployeesSerializer, SaveThirdPartiesSerializer
 
 # Open Django console
 # python manage.py shell
@@ -15,5 +15,8 @@ class LargeResultsSetPagination(pagination.PageNumberPagination):
 
 class RetrieveEmployeesView(generics.ListAPIView):
     queryset = Employees.objects.get_all()
-    serializer_class = EmployeesSerializer
+    serializer_class = RetrieveEmployeesSerializer
     pagination_class = LargeResultsSetPagination
+
+class CreateEmployeesView(generics.CreateAPIView):
+    serializer_class = SaveThirdPartiesSerializer

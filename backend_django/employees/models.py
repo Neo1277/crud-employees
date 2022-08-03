@@ -42,6 +42,7 @@ class ThirdParties(models.Model):
         help_text="Date and time when the register was updated"
     )
 
+# Managers: https://docs.djangoproject.com/en/4.0/topics/db/managers/#creating-a-manager-with-queryset-methods
 class EmployeesManager(models.Manager):
     def get_all(self):
         return self.values(
@@ -84,12 +85,12 @@ class Employees(models.Model):
         primary_key=True
     )
 
-    third_party = models.ForeignKey(
+    third_party = models.OneToOneField(
         ThirdParties,
         on_delete=models.CASCADE,
         related_name='third_parties_employees'
     )
-
+    
     country = CountryField()
 
     area = models.ForeignKey(
