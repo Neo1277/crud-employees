@@ -5,8 +5,15 @@ from .models import Employees, ThirdParties
 from .serializers import (
     RetrieveEmployeesSerializer,
     SaveThirdPartiesSerializer,
-    UpdateThirdPartiesSerializer
+    UpdateThirdPartiesSerializer,
+    RetrieveNewEmailSerializer
 )
+
+from django.http.response import JsonResponse
+
+from rest_framework.views import APIView
+
+from .email_generation import check_email
 
 # Open Django console
 # python manage.py shell
@@ -33,3 +40,15 @@ class UpdateEmployeesView(generics.UpdateAPIView):
 
 class DeleteEmployeesView(generics.DestroyAPIView):
     queryset = ThirdParties.objects.all()
+
+class RetrieveNewEmailView(APIView):
+
+    def get(self, request, last_name, first_name, country_code, pk=None):
+        """
+        Return email generated automatically according to the parameters
+        """
+        email = check_email(last_name, first_name, country_code, pk)
+        data = {
+            "email": email
+        }
+        return JsonResponse(data, safe=False)

@@ -17,6 +17,16 @@ class ThirdPartiesManager(models.Manager):
             types_of_identity_documents_id=types_of_identity_documents_id
         )
 
+    def validate_if_email_exist(self,
+                                last_name,
+                                first_name):
+        return self.values(
+            'email'
+        ).filter(
+            last_name=last_name,
+            first_name=first_name
+        )
+
 class ThirdParties(models.Model):
 
     id = UnsignedAutoField(

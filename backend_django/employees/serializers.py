@@ -189,3 +189,12 @@ class UpdateThirdPartiesSerializer(SaveThirdPartiesSerializer):
         employee.save()
 
         return instance
+
+class RetrieveNewEmailSerializer(serializers.ModelSerializer):
+    # DRF custom serializer:
+    # https://stackoverflow.com/a/67476280
+    email = serializers.EmailField(read_only=True)
+
+    class Meta:
+        model = ThirdParties
+        fields = ['email']
