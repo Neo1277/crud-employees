@@ -4,11 +4,13 @@ from .models import Employees, ThirdParties
 
 from django_countries.serializer_fields import CountryField
 
-from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.validators import UniqueValidator
 
 from dateutil.relativedelta import relativedelta
 
 from datetime import datetime
+
+from django.db.models import Q
 
 class RetrieveEmployeesSerializer(serializers.ModelSerializer):
     # DRF custom serializer:
@@ -100,32 +102,27 @@ class SaveThirdPartiesSerializer(serializers.ModelSerializer):
                                           required=False, max_length=50,
                                           allow_blank=True)
 
-    email =  serializers.EmailField(max_length=300)
+    # validators:
+    # https://www.django-rest-framework.org/api-guide/validators/#uniquevalidator
+    email =  serializers.EmailField(max_length=300,
+                                    validators=[
+                                        UniqueValidator(
+                                            queryset=ThirdParties.objects.all()
+                                        )
+                                    ]
+    )
 
     types_of_identity_documents_id = serializers.CharField(required=True)
 
     third_parties_employees = SaveEmployeesSerializer()
 
-    def validate_if_identity_document_and_type_exist(self,
-                                                     identity_document,
-                                                     types_of_identity_documents_id):
-        """
-        Check that there isn't an identity document with the same
-        type registered yet.
-        """
-        validate_identity_document = ThirdParties.objects.filter(
-            identity_document=identity_document,
-            types_of_identity_documents_id=types_of_identity_documents_id
+    def validate(self, data):
+        validate_if_identity_document_and_type_exist = ThirdParties.objects.validate_if_identity_document_and_type_exist(
+            data['identity_document'],
+            data['types_of_identity_documents_id']
         )
 
-        return validate_identity_document
-
-    def validate(self, data):
-
-        if self.validate_if_identity_document_and_type_exist(
-                data['identity_document'],
-                data['types_of_identity_documents_id']
-        ):
+        if validate_if_identity_document_and_type_exist:
             raise serializers.ValidationError("There is already an employee with the same "
                                               "identity document and type of identity "
                                               "document")
@@ -154,3 +151,41 @@ class SaveThirdPartiesSerializer(serializers.ModelSerializer):
                   'middle_names',
                   'email',
                   'third_parties_employees']
+
+class UpdateThirdPartiesSerializer(SaveThirdPartiesSerializer):
+
+    def validate(self, data):
+
+        # Query unequals: https://stackoverflow.com/a/1154977
+        validate_if_identity_document_and_type_exist = ThirdParties.objects.validate_if_identity_document_and_type_exist(
+            data['identity_document'],
+            data['types_of_identity_documents_id']
+        ).filter(~Q(id=self.instance.id))
+
+        if validate_if_identity_document_and_type_exist:
+            raise serializers.ValidationError("There is already an employee with the same "
+                                              "identity document and type of identity "
+                                              "document")
+
+        return data
+
+    def update(self, instance, validated_data):
+
+        employee_data = validated_data.pop('third_parties_employees')
+
+        instance.identity_document = validated_data.get('identity_document', instance.identity_document)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.second_surname = validated_data.get('second_surname', instance.second_surname)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.middle_names = validated_data.get('middle_names', instance.middle_names)
+        instance.email = validated_data.get('email', instance.email)
+        instance.types_of_identity_documents_id = validated_data.get('types_of_identity_documents_id', instance.types_of_identity_documents_id)
+        instance.save()
+
+        employee = Employees.objects.get(third_party=instance)  # this will crash if the id is invalid though
+        employee.country = employee_data.get('country', employee.country)
+        employee.date_of_entry = employee_data.get('date_of_entry', employee.date_of_entry)
+        employee.area_id = employee_data.get('area_id', employee.area_id)
+        employee.save()
+
+        return instance

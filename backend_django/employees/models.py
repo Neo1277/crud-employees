@@ -5,7 +5,17 @@ from types_of_identity_documents.models import TypesOfIdentityDocuments
 from django_countries.fields import CountryField
 from areas.models import Areas
 
-from django.db.models import F
+from django.db.models import F, Q
+
+# Managers: https://docs.djangoproject.com/en/4.0/topics/db/managers/#creating-a-manager-with-queryset-methods
+class ThirdPartiesManager(models.Manager):
+    def validate_if_identity_document_and_type_exist(self,
+                                                     identity_document,
+                                                     types_of_identity_documents_id):
+        return self.filter(
+            identity_document=identity_document,
+            types_of_identity_documents_id=types_of_identity_documents_id
+        )
 
 class ThirdParties(models.Model):
 
@@ -41,6 +51,8 @@ class ThirdParties(models.Model):
         auto_now=True,
         help_text="Date and time when the register was updated"
     )
+
+    objects = ThirdPartiesManager()
 
 # Managers: https://docs.djangoproject.com/en/4.0/topics/db/managers/#creating-a-manager-with-queryset-methods
 class EmployeesManager(models.Manager):

@@ -1,8 +1,12 @@
 from rest_framework import generics, pagination
 
-from .models import Employees
+from .models import Employees, ThirdParties
 
-from .serializers import RetrieveEmployeesSerializer, SaveThirdPartiesSerializer
+from .serializers import (
+    RetrieveEmployeesSerializer,
+    SaveThirdPartiesSerializer,
+    UpdateThirdPartiesSerializer
+)
 
 # Open Django console
 # python manage.py shell
@@ -20,3 +24,7 @@ class RetrieveEmployeesView(generics.ListAPIView):
 
 class CreateEmployeesView(generics.CreateAPIView):
     serializer_class = SaveThirdPartiesSerializer
+
+class UpdateEmployeesView(generics.UpdateAPIView):
+    queryset = ThirdParties.objects.all()
+    serializer_class = UpdateThirdPartiesSerializer
