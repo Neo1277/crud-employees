@@ -22,9 +22,14 @@ class RetrieveEmployeesView(generics.ListAPIView):
     serializer_class = RetrieveEmployeesSerializer
     pagination_class = LargeResultsSetPagination
 
+# Generic views:
+# https://www.django-rest-framework.org/api-guide/generic-views/
 class CreateEmployeesView(generics.CreateAPIView):
     serializer_class = SaveThirdPartiesSerializer
 
 class UpdateEmployeesView(generics.UpdateAPIView):
     queryset = ThirdParties.objects.all()
     serializer_class = UpdateThirdPartiesSerializer
+
+class DeleteEmployeesView(generics.DestroyAPIView):
+    queryset = ThirdParties.objects.all()
