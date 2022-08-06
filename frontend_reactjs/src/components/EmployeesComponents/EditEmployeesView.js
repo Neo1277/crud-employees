@@ -237,16 +237,16 @@ export class EditEmployeeComponent extends Component {
             return(
                 <div className="container">
                     
-                <br />
-				<div className="row">
-					<div className="col">
-						<Breadcrumb>
-							<BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-							<BreadcrumbItem active>Edit employee</BreadcrumbItem>
-						</Breadcrumb>
-					</div>
-				</div>		
-                <br />
+                    <br />
+                    <div className="row">
+                        <div className="col">
+                            <Breadcrumb>
+                                <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+                                <BreadcrumbItem active>Edit employee</BreadcrumbItem>
+                            </Breadcrumb>
+                        </div>
+                    </div>		
+                    <br />
                     <div className="row row-content">
                         <div className="col-12">
                             <h4>Edit Employee</h4>

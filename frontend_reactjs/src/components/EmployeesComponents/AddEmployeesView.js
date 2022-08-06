@@ -235,16 +235,16 @@ export class AddEmployeeComponent extends Component {
             return(
                 <div className="container">
                     
-                <br />
-				<div className="row">
-					<div className="col">
-						<Breadcrumb>
-							<BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-							<BreadcrumbItem active>Add employees</BreadcrumbItem>
-						</Breadcrumb>
-					</div>
-				</div>		
-                <br />
+                    <br />
+                    <div className="row">
+                        <div className="col">
+                            <Breadcrumb>
+                                <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+                                <BreadcrumbItem active>Add employees</BreadcrumbItem>
+                            </Breadcrumb>
+                        </div>
+                    </div>		
+                    <br />
                     <div className="row row-content">
                         <div className="col-12">
                             <h4>Add Employee</h4>

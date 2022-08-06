@@ -82,7 +82,7 @@ class Main extends Component {
     
     const EmployeeWithId = ({match}) => {
       return(
-        <EditEmployeeComponent employee={this.props.employees.employees.results.filter((employee) => employee.third_party_id == match.params.id)[0]} 
+        <EditEmployeeComponent employee={this.props.employees.employees.results.filter((employee) => employee.third_party_id === match.params.id)[0]} 
                               editEmployee={this.props.editEmployee} 
                               countries={this.props.countries} areas={this.props.areas} 
                               types_of_identity_documents={this.props.types_of_identity_documents}
@@ -93,7 +93,7 @@ class Main extends Component {
 
     const DeleteEmployeeWithId = ({match}) => {
       return(
-        <DeleteEmployeeComponent employee={this.props.employees.employees.results.filter((employee) => employee.third_party_id == match.params.id)[0]} 
+        <DeleteEmployeeComponent employee={this.props.employees.employees.results.filter((employee) => employee.third_party_id === match.params.id)[0]} 
                               deleteEmployee={this.props.deleteEmployee} 
                               countries={this.props.countries} areas={this.props.areas} 
                               types_of_identity_documents={this.props.types_of_identity_documents}

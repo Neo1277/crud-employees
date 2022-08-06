@@ -105,23 +105,45 @@ export class PaginationComponent extends Component {
                 </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" 
-                                    onClick={this.handlePagination} 
-                                    href={this.props.previous_link}>
-                                        Previous
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" 
-                                    onClick={this.handlePagination} 
-                                    href={this.props.next_link}>
-                                        Next
-                                    </a>
-                                </li>
-                                <li class="page-item">
-                                    Amount registers {this.props.amount_registers}
-                                </li>
+                    
+                {this.props.previous_link===null || this.props.previous_link==='' ? 
+                    <li class="page-item">
+                        <a class="page-link disabled-link" 
+                            href="/">
+                            Previous
+                        </a>
+                    </li>
+                :  
+                    <li class="page-item">
+                        <a class="page-link" 
+                        onClick={this.handlePagination} 
+                        href={this.props.previous_link}>
+                            Previous
+                        </a>
+                    </li>
+                }
+
+                {this.props.next_link==null || this.props.next_link=='' ? 
+                    <li class="page-item">
+                        <a class="page-link disabled-link" 
+                            href="/">
+                            Next
+                        </a>
+                    </li>
+                :
+                    <li class="page-item">
+                        <a class="page-link" 
+                        onClick={this.handlePagination} 
+                        href={this.props.next_link}>
+                            Next
+                        </a>
+                    </li>
+                }
+
+
+                    <li class="page-item amount-registers">
+                        Amount registers {this.props.amount_registers}
+                    </li>
                 </ul>
             </nav>
             </div>

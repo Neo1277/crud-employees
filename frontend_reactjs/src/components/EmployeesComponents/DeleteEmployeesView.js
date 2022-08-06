@@ -67,16 +67,16 @@ import {
             return(
                 <div className="container">
                     
-                <br />
-				<div className="row">
-					<div className="col">
-						<Breadcrumb>
-							<BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-							<BreadcrumbItem active>Delete employee</BreadcrumbItem>
-						</Breadcrumb>
-					</div>
-				</div>		
-                <br />
+                    <br />
+                    <div className="row">
+                        <div className="col">
+                            <Breadcrumb>
+                                <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+                                <BreadcrumbItem active>Delete employee</BreadcrumbItem>
+                            </Breadcrumb>
+                        </div>
+                    </div>		
+                    <br />
                     <div className="row row-content">
                         <div className="col-12">
                             <h4>Delete Employee</h4>
@@ -138,7 +138,7 @@ import {
                                     <Label for="country">Country employment</Label>
                                     <Input type="select" name="country" 
                                     id="country" innerRef={(input) => this.country = input} 
-                                    value={this.props.employee.id_country}>
+                                    value={this.props.employee.country.code}>
                                     {this.props.countries.countries.map((field, i) => { 
                                         /*{
                                             if (i==0){
