@@ -34,14 +34,7 @@ export class AddEmployeeComponent extends Component {
 
     }
 
-    /**
-     * 
-     * Send parameters to do the register employee request and clear fields in the view
-     */
-
-    handleRegister(event) {
-        event.preventDefault();
-
+    validateFields(){
         /**
          * Validations for the fields before making the request
          * to the API, some of them are: 
@@ -50,15 +43,17 @@ export class AddEmployeeComponent extends Component {
          * characters.
          */
 
-        if (!this.identity_document.value || 
+        var result = true;
+
+         if (!this.identity_document.value || 
             this.identity_document.value.trim().length === 0) {
             alert('identity document field cannot be empty');
         }else{
-            var identity_document_validated = removeExtraSpace(this.identity_document.value);
+            this.identity_document.value = removeExtraSpace(this.identity_document.value);
             
-            if (/[^a-zA-Z0-9 ]/.test(identity_document_validated) ) {
+            if (/[^a-zA-Z0-9 ]/.test(this.identity_document.value) ) {
                 alert('Invalid characters identity document: Just alphanumeric characters are allowed');
-                return false;
+                result = false;
              }
         }        
         
@@ -66,11 +61,11 @@ export class AddEmployeeComponent extends Component {
             this.last_name.value.trim().length === 0) {
             alert('first name field cannot be empty');
         }else{
-            var last_name_validated = removeExtraSpace(this.last_name.value);
+            this.last_name.value = removeExtraSpace(this.last_name.value);
             
-            if (/[^A-Z ]/.test(last_name_validated) ) {
+            if (/[^A-Z ]/.test(this.last_name.value) ) {
                 alert('first name Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
+                result = false;
              }
         }        
         
@@ -78,11 +73,11 @@ export class AddEmployeeComponent extends Component {
             this.second_surname.value.trim().length === 0) {
             alert('second surname  field cannot be empty');
         }else{
-            var second_surname_validated = removeExtraSpace(this.second_surname.value);
+            this.second_surname.value = removeExtraSpace(this.second_surname.value);
             
-            if (/[^A-Z ]/.test(second_surname_validated) ) {
+            if (/[^A-Z ]/.test(this.second_surname.value) ) {
                 alert('second surname  Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
+                result = false;
              }
         }        
         
@@ -90,25 +85,37 @@ export class AddEmployeeComponent extends Component {
             this.first_name.value.trim().length === 0) {
             alert('first name field cannot be empty');
         }else{
-            var first_name_validated = removeExtraSpace(this.first_name.value);
+            this.first_name.value = removeExtraSpace(this.first_name.value);
             
-            if (/[^A-Z ]/.test(first_name_validated) ) {
+            if (/[^A-Z ]/.test(this.first_name.value) ) {
                 alert('first name Invalid characters:  Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
+                result = false;
              }
         }        
         
-        var middle_names_validated = null;
         if (this.middle_names.value || 
             this.middle_names.value.trim().length !== 0) {
                 
-            var middle_names_validated = removeExtraSpace(this.middle_names.value);
+            this.middle_names.value = removeExtraSpace(this.middle_names.value);
             
-            if (/[^A-Z ]/.test(middle_names_validated) ) {
+            if (/[^A-Z ]/.test(this.middle_names.value) ) {
                 alert('middle_names Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
+                result = false;
              }
         }
+
+        return result;
+    }
+
+    /**
+     * 
+     * Send parameters to do the register employee request and clear fields in the view
+     */
+
+    handleRegister(event) {
+        event.preventDefault();
+
+        this.validateFields();
 
         // set employee data nested relation
         // one to one field
@@ -120,11 +127,11 @@ export class AddEmployeeComponent extends Component {
         
         this.props.registerEmployee({
             types_of_identity_documents_id : this.types_of_identity_documents_id .value, 
-            identity_document: identity_document_validated, 
-            last_name: last_name_validated, 
-            second_surname: second_surname_validated, 
-            first_name: first_name_validated, 
-            middle_names: middle_names_validated,
+            identity_document: this.identity_document.value, 
+            last_name: this.last_name.value, 
+            second_surname: this.second_surname.value,
+            first_name: this.first_name.value, 
+            middle_names: this.middle_names.value,
             email: this.email.value,
             third_parties_employees: third_parties_employees,
         });

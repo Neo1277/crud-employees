@@ -179,9 +179,8 @@ export const addEmployees = (employees) => ({
     error => {
           throw error;
     })
-  .then(response => response.json())
   .then(response => { 
-    console.log('Delete Employee', response); 
+    console.log('Employee deleted successfully'); 
     alert('Employee deleted successfully!\n'); 
     /*window.location.reload(false);*/
     window.location.href = '/home'; 

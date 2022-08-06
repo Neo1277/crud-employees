@@ -10,11 +10,12 @@ import {
 	Input, 
     Label, 
 } from 'reactstrap';
-import { removeExtraSpace } from './EmployeesView';
+import { AddEmployeeComponent } from './AddEmployeesView';
+
 /**
  * Edit employee component
  */
-export class EditEmployeeComponent extends Component {
+export class EditEmployeeComponent extends AddEmployeeComponent {
 
     constructor(props){
         super(props);
@@ -42,73 +43,8 @@ export class EditEmployeeComponent extends Component {
 
     handleUpdate(event) {
         event.preventDefault();
-
-        /**
-         * Validations for the fields before making the request
-         * to the API, some of them are: 
-         * regular expresions to allow only upper cases, letters
-         * alphanumeric characters without accents or special
-         * characters.
-         */
-        if (!this.identity_document.value || 
-            this.identity_document.value.trim().length === 0) {
-            alert('identity document field cannot be empty');
-        }else{
-            var identity_document_validated = removeExtraSpace(this.identity_document.value);
-            
-            if (/[^a-zA-Z0-9 ]/.test(identity_document_validated) ) {
-                alert('Invalid characters identity document: Just alphanumeric characters are allowed');
-                return false;
-             }
-        }        
         
-        if (!this.last_name.value || 
-            this.last_name.value.trim().length === 0) {
-            alert('first name field cannot be empty');
-        }else{
-            var last_name_validated = removeExtraSpace(this.last_name.value);
-            
-            if (/[^A-Z ]/.test(last_name_validated) ) {
-                alert('first name Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
-             }
-        }        
-        
-        if (!this.second_surname.value || 
-            this.second_surname.value.trim().length === 0) {
-            alert('second surname field cannot be empty');
-        }else{
-            var second_surname_validated = removeExtraSpace(this.second_surname.value);
-            
-            if (/[^A-Z ]/.test(second_surname_validated) ) {
-                alert('second surname Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
-             }
-        }        
-        
-        if (!this.first_name.value || 
-            this.first_name.value.trim().length === 0) {
-            alert('first name field cannot be empty');
-        }else{
-            var first_name_validated = removeExtraSpace(this.first_name.value);
-            
-            if (/[^A-Z ]/.test(first_name_validated) ) {
-                alert('first name Invalid characters:  Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
-             }
-        }        
-        
-        var middle_names_validated = null;
-        if (this.middle_names.value || 
-            this.middle_names.value.trim().length !== 0) {
-                
-            var middle_names_validated = removeExtraSpace(this.middle_names.value);
-            
-            if (/[^A-Z ]/.test(middle_names_validated) ) {
-                alert('middle_names Invalid characters: Just Upper letters without accents are allowed and letters with special characters are not allowed');
-                return false;
-             }
-        }
+        this.validateFields();
 
         // set employee data nested relation
         // one to one field
@@ -120,11 +56,11 @@ export class EditEmployeeComponent extends Component {
         
         this.props.editEmployee({
             types_of_identity_documents_id: this.types_of_identity_documents_id.value, 
-            identity_document: identity_document_validated, 
-            last_name: last_name_validated, 
-            second_surname: second_surname_validated, 
-            first_name: first_name_validated, 
-            middle_names: middle_names_validated,
+            identity_document: this.identity_document.value, 
+            last_name: this.last_name.value, 
+            second_surname: this.second_surname.value,
+            first_name: this.first_name.value, 
+            middle_names: this.middle_names.value,
             email: this.email.value,
             third_parties_employees: third_parties_employees,
             third_party_id: this.props.employee.third_party_id
@@ -133,49 +69,6 @@ export class EditEmployeeComponent extends Component {
 
     }    
  
-    /**
-     * Event to capture first name and change the state
-     * to make the request to the API and generate
-     * automatically the email
-     */
-    handleFirstName(event) {
-
-        event.preventDefault();
-        this.validateEmailAndCahngeState({ first_name: event.target.value });
-    }
-
-    /**
-     * Event to capture last name and change the state
-     * to make the request to the API and generate
-     * automatically the email
-     */
-    handleLastName(event) {
-
-        event.preventDefault();
-        this.validateEmailAndCahngeState({ last_name: event.target.value });
-
-    }   
- 
-    /**
-     * Event to capture the country code that is in the end of the doman and
-     * change the state to make the request to the API and generata
-     * automatically the email
-     */
-    handleCountryCode(event) {
-        event.preventDefault();
-
-        var get_country_code = event.target.text.split('-');
-        var get_country_code = get_country_code[1].trim();
-
-        this.validateEmailAndCahngeState({ country_code: get_country_code });
-    }
-    
-    /**
-     * Call function retrieveNewEmail that make the request to the API
-     * to generate email automatically with the values of the state
-     * and continue the flow of the promise to get the email, change
-     * the state and show it in the HTML field
-     */
     validateEmailAndCahngeState(dataState) {
         
         /**
