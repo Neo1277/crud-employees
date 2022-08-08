@@ -184,7 +184,6 @@ class CreateEmployeesViewTest(RetrieveEmployeesViewTest):
 
 class UpdateEmployeesViewTest(RetrieveEmployeesViewTest):
 
-
     @classmethod
     def setUpTestData(cls):
         super(UpdateEmployeesViewTest, cls).setUpTestData()
@@ -336,3 +335,35 @@ class UpdateEmployeesViewTest(RetrieveEmployeesViewTest):
         )
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteEmployeesViewTest(RetrieveEmployeesViewTest):
+
+    @classmethod
+    def setUpTestData(cls):
+        super(DeleteEmployeesViewTest, cls).setUpTestData()
+
+        cls.second_delete_third_party = ThirdParties.objects.create(
+            identity_document="888553451",
+            types_of_identity_documents=cls.first_types_of_identity_documents,
+            last_name="RIASCOS",
+            second_surname='ORTIZ',
+            first_name='KELLY',
+            middle_names='JOHANA',
+            email='kelly.riascos@cidenet.com.co'
+        )
+
+        cls.second_delete_employee = Employees.objects.create(
+            third_party=cls.second_delete_third_party,
+            country='CO',
+            area=cls.first_area,
+            date_of_entry=cls.current_date
+        )
+
+    def test_delete_endpoint(self):
+
+        response = self.client.delete(
+            reverse('delete-employeesview', kwargs={'pk': self.second_delete_third_party.pk})
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
