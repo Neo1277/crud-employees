@@ -45,6 +45,11 @@ pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 ```
+*   To seed some registers to the database run the following commands:
+```
+python manage.py seed_areas --mode=refresh
+python manage.py seed_types_of_identity_document --mode=refresh
+```
 *   To install the react application, go to the frontend_reactjs folder and run
 ```
 yarn install
