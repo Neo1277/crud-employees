@@ -8,6 +8,8 @@ from employees.models import ThirdParties, Employees
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+import json
+
 """
 Correct way to make tests:
 https://stackoverflow.com/q/60892321
@@ -367,3 +369,68 @@ class DeleteEmployeesViewTest(RetrieveEmployeesViewTest):
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+class RetrieveNewEmailViewTest(RetrieveEmployeesViewTest):
+
+    def test_retrieve_new_email_endpoint(self):
+
+        parameters = {
+            'last_name': 'BURBANO',
+            'first_name': 'MARCELA',
+            'country_code': 'US'
+        }
+
+        response = self.client.get(
+            reverse('retrieve-new-email-employeesview',kwargs=parameters)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content), {'email': 'marcela.burbano@cidenet.com.us'})
+
+    def test_retrieve_new_email_endpoint_names_that_already_exist(self):
+
+        parameters = {
+            'last_name': 'MONTOYA',
+            'first_name': 'JUAN',
+            'country_code': 'US'
+        }
+
+        response = self.client.get(
+            reverse('retrieve-new-email-employeesview',kwargs=parameters)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content), {'email': 'juan.montoya.1@cidenet.com.us'})
+
+    def test_retrieve_new_email_endpoint_with_pk_parameters_same_names(self):
+
+        parameters = {
+            'last_name': 'MONTOYA',
+            'first_name': 'JUAN',
+            'country_code': 'CO',
+            'pk': self.first_third_party.pk
+        }
+
+        response = self.client.get(
+            reverse('retrieve-new-email-employeesview',kwargs=parameters)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content), {'email': 'juan.montoya@cidenet.com.co'})
+
+
+    def test_retrieve_new_email_endpoint_with_pk_parameters_different_names(self):
+
+        parameters = {
+            'last_name': 'MENDEZ',
+            'first_name': 'RAMIRO',
+            'country_code': 'CO',
+            'pk': self.first_third_party.pk
+        }
+
+        response = self.client.get(
+            reverse('retrieve-new-email-employeesview',kwargs=parameters)
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(json.loads(response.content), {'email': 'ramiro.mendez@cidenet.com.co'})
