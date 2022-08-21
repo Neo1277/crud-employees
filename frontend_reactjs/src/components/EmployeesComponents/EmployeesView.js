@@ -100,7 +100,7 @@ export class PaginationComponent extends Component {
                                 innerRef={(input) => this.search = input} />
                         </FormGroup></div>  
                     <div className="col-2">
-                        <Button onClick={this.handleSearch} type="submit" value="submit" color="danger">Search</Button>
+                        <Button onClick={this.handleSearch} type="submit" value="submit" color="primary">Search</Button>
                     </div>
                 </div>
             <nav aria-label="Page navigation example">
@@ -184,13 +184,19 @@ export class PaginationComponent extends Component {
 					</div>
 				</div>				
 				<h2 align="center">Employees</h2>
-
+                {/**
+                 * Font awesome icons:
+                 * https://fontawesome.com/v4/icons/
+                 */}
 				<Link to='/add_employee' >
-					<Button color="primary">Add employee</Button>
+					<Button color="primary">
+                        <span className="fa fa-plus-square">&nbsp;</span>  
+                           Add employee
+                    </Button>
                 </Link>				
 
 				<div className="row row-content">
-					<Table>
+					<Table responsive>
 						<thead>
 							<tr>
 							<th>Type of identity document</th>
@@ -233,10 +239,14 @@ export class PaginationComponent extends Component {
                                 </td>
 								<td>
 									<Link to={`/edit_employee/${field.third_party_id}`} >
-										<Button color="success">Edit</Button>
+										<Button color="success">
+                                            <span className="fa fa-pencil"></span>
+                                        </Button>
 									</Link>
 									<Link to={`/delete_employee/${field.third_party_id}`} >
-										<Button color="danger">Delete</Button>
+										<Button color="danger">
+                                            <span className="fa fa-trash"></span>
+                                        </Button>
                                     </Link>
                                 </td>
 							</tr>

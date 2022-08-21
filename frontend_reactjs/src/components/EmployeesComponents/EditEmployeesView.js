@@ -248,7 +248,10 @@ export class EditEmployeeComponent extends AddEmployeeComponent {
                                         defaultValue={this.props.employee.date_of_entry} />
                                 </FormGroup>
                                 
-                                <Button type="submit" value="submit" color="success">Edit</Button>
+                                <Button type="submit" value="submit" color="success">
+                                    <span className="fa fa-pencil">&nbsp;</span>  
+                                    Edit
+                                </Button>
                             </Form>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ class Header extends Component{
                         
 					<div className="row">
 						<NavbarBrand className="mr-auto">
-							<img src="/logo192.png" height="30" width="41" alt="My blog" />
+							<span className="fa fa-home fa-lg"></span> Home
 						</NavbarBrand>
 						{/*<Collapse isOpen={this.state.isNavOpen} navbar>
 							<Nav navbar>

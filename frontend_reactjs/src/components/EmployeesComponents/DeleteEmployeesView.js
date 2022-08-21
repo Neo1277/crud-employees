@@ -176,7 +176,10 @@ import {
                                         value={this.props.employee.date_of_entry} />
                                 </FormGroup>
                                 
-                                <Button type="submit" value="submit" color="danger">Delete</Button>
+                                <Button type="submit" value="submit" color="danger">
+                                    <span className="fa fa-trash">&nbsp;</span>  
+                                    Delete
+                                </Button>
                             </Form>
                         </div>
                     </div>

@@ -351,7 +351,10 @@ export class AddEmployeeComponent extends Component {
                                         innerRef={(input) => this.date_of_entry = input}  />
                                 </FormGroup>
                                 
-                                <Button type="submit" value="submit" color="primary">Add</Button>
+                                <Button type="submit" value="submit" color="primary">
+                                    <span className="fa fa-plus-square">&nbsp;</span>  
+                                    Add
+                                </Button>
                             </Form>
                         </div>
                     </div>
