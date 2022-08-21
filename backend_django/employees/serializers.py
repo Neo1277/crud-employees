@@ -24,10 +24,13 @@ class RetrieveEmployeesSerializer(serializers.ModelSerializer):
     email = serializers.CharField(read_only=True)
     type_of_identity_document = serializers.CharField(read_only=True)
     type_of_identity_document_id = serializers.CharField(read_only=True)
+    date_of_entry = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     country = CountryField(country_dict=True)
     area_id = serializers.CharField(read_only=True)
     area_description = serializers.CharField(read_only=True)
     employee_id = serializers.CharField(read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = Employees
