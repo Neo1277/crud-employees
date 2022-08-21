@@ -100,22 +100,25 @@ export class PaginationComponent extends Component {
                                 innerRef={(input) => this.search = input} />
                         </FormGroup></div>  
                     <div className="col-2">
-                        <Button onClick={this.handleSearch} type="submit" value="submit" color="primary">Search</Button>
+                        <Button onClick={this.handleSearch} type="submit" value="submit" color="primary">
+                            <span className="fa fa-search">&nbsp;</span>
+                            Search
+                        </Button>
                     </div>
                 </div>
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
+                <ul className="pagination">
                     
                 {this.props.previous_link===null || this.props.previous_link==='' ? 
-                    <li class="page-item">
-                        <a class="page-link disabled-link" 
+                    <li className="page-item">
+                        <a className="page-link disabled-link" 
                             href="/">
                             Previous
                         </a>
                     </li>
                 :  
-                    <li class="page-item">
-                        <a class="page-link" 
+                    <li className="page-item">
+                        <a className="page-link" 
                         onClick={this.handlePagination} 
                         href={this.props.previous_link}>
                             Previous
@@ -124,15 +127,15 @@ export class PaginationComponent extends Component {
                 }
 
                 {this.props.next_link==null || this.props.next_link=='' ? 
-                    <li class="page-item">
-                        <a class="page-link disabled-link" 
+                    <li className="page-item">
+                        <a className="page-link disabled-link" 
                             href="/">
                             Next
                         </a>
                     </li>
                 :
-                    <li class="page-item">
-                        <a class="page-link" 
+                    <li className="page-item">
+                        <a className="page-link" 
                         onClick={this.handlePagination} 
                         href={this.props.next_link}>
                             Next
@@ -141,7 +144,7 @@ export class PaginationComponent extends Component {
                 }
 
 
-                    <li class="page-item amount-registers">
+                    <li className="page-item amount-registers">
                         Amount registers {this.props.amount_registers}
                     </li>
                 </ul>
@@ -218,7 +221,7 @@ export class PaginationComponent extends Component {
 					{props.employees.employees.results.map((field, i) => { 
 						
 						return(
-							<tr>
+							<tr key={field.employee_id}>
                                 <td>{field.type_of_identity_document}</td>
                                 <td>{field.identity_document}</td>
 								<td>{field.last_name}</td>
