@@ -4,9 +4,10 @@ import {
 	NavbarBrand, 
 	Nav, 
 	NavbarToggler, 
+	Collapse,
+	NavItem
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
 
 class Header extends Component{
 	constructor(props) {
@@ -30,14 +31,13 @@ class Header extends Component{
 		return(
 			<React.Fragment>
 				<Navbar dark expand="md">
-					<div className="container">
+                    <div className="container">
 						<NavbarToggler onClick={this.toggleNav} />
                         
-					<div className="row">
-						<NavbarBrand className="mr-auto">
-							<span className="fa fa-home fa-lg"></span> Home
-						</NavbarBrand>
-						{/*<Collapse isOpen={this.state.isNavOpen} navbar>
+						{/*<NavbarBrand className="mr-auto">
+							<span className="fa fa-superpowers fa-lg"></span>
+						</NavbarBrand>*/}
+						<Collapse isOpen={this.state.isNavOpen} navbar>
 							<Nav navbar>
 								<NavItem>
 									<NavLink className="nav-link" to="/home">
@@ -45,8 +45,7 @@ class Header extends Component{
 									</NavLink>
 								</NavItem>
 							</Nav>		
-                        </Collapse>*/}
-					</div>
+                        </Collapse>
 					</div>
 				</Navbar>
             </React.Fragment>

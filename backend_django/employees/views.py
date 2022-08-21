@@ -28,7 +28,7 @@ class LargeResultsSetPagination(pagination.PageNumberPagination):
 # https://stackoverflow.com/a/58375919
 # https://www.django-rest-framework.org/api-guide/filtering/#searchfilter
 class RetrieveEmployeesView(generics.ListAPIView):
-    queryset = Employees.objects.get_all()
+    queryset = Employees.objects.get_all().order_by('-id')
     serializer_class = RetrieveEmployeesSerializer
     pagination_class = LargeResultsSetPagination
     filter_backends = [filters.SearchFilter]
