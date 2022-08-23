@@ -147,3 +147,6 @@ class Employees(models.Model):
     )
 
     objects = EmployeesManager()
+
+    class Meta:
+        ordering = ['-id']
